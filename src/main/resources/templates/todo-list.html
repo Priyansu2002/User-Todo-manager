@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            margin-top: 50px;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: #343a40;
+            font-size: 2.5rem;
+        }
+
+        .btn-primary, .btn-warning, .btn-danger {
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+            transform: scale(1.05);
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        .table-hover tbody tr:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-back {
+            margin-top: 20px;
+            display: inline-block;
+            animation: slideUp 1s ease-in-out;
+            margin-bottom:36px;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        td, th {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Your Todos</h2>
+    <a th:href="@{/users/{userId}/todos/add(userId=${userId})}" class="btn btn-primary mb-3">Add New Todo</a>
+    <a th:href="@{/users}" class="btn btn-primary btn-back">Back</a>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="todo : ${todos}">
+            <td th:text="${todo.title}">Sample Title</td>
+            <td th:text="${todo.description}">Sample Description</td>
+            <td>
+                <a th:href="@{/users/{userId}/todos/edit/{id}(userId=${userId}, id=${todo.id})}" class="btn btn-warning">Update</a>
+                <a th:href="@{/users/{userId}/todos/delete/{id}(userId=${userId}, id=${todo.id})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(todos)}">
+            <td colspan="3">No todos available</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

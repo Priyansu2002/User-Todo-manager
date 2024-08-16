@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - User Management System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+        .welcome-message {
+            animation: fadeInOut 1s ease-in-out;
+        }
+        .btn-animate {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .btn-animate:hover {
+            transform: scale(1.1);
+            background-color: #007bff;
+            color: white;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        .header-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .header-buttons a {
+            margin: 0 10px;
+        }
+        .instructions {
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            left: 50%;
+            bottom: 10px;
+            transform: translateX(-50%);
+            z-index: 1000;
+            text-align: center;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            const instructions = document.getElementById('instructions');
+            const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
+            if (!hasSeenWelcome) {
+                welcomeMessage.style.display = 'block';
+                localStorage.setItem('hasSeenWelcome', 'true');
+                setTimeout(() => {
+                    welcomeMessage.style.display = 'none';
+                }, 1000); // Hide after 1 second
+            }
+            instructions.style.display = 'block';
+        });
+    </script>
+</head>
+<body>
+
+<div class="container text-center">
+    <h1>Welcome to User Management System</h1>
+    <div id="welcomeMessage" class="alert alert-info welcome-message" style="display: none;">
+        Welcome to the User Management System!
+    </div>
+    <div class="header-buttons">
+        <a th:href="@{/list_users}" class="btn btn-primary btn-animate">Admin</a>
+        <a th:href="@{/register}" class="btn btn-secondary btn-animate">Register</a>
+        <a th:href="@{/login}" class="btn btn-success btn-animate">Login</a>
+    </div>
+</div>
+
+<div id="instructions" class="instructions">
+    <strong>Instructions:</strong>
+    <ul>
+        <li><a th:href="@{/list_users}">Admin</a> - Click this to update and delete users</li>
+        <li><a th:href="@{/register}">Register</a> - Click this to register a new user.</li>
+        <li><a th:href="@{/login}">Login</a> - Click this to log in to the system.</li>
+    </ul>
+</div>
+
+</body>
+</html>
